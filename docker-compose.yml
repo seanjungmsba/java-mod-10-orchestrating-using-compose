@@ -1,0 +1,22 @@
+version: '2'
+services:
+  spring-boot-compose:
+    image: rest-service-complete:0.0.1-SNAPSHOT
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-compose:5432/db_test
+    depends_on:
+      - postgres-compose
+  postgres-compose:
+    image: ubuntu/postgres:14-22.04_beta
+    ports:
+      - 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DB=db_test
+volumes:
+  postgres_data:
+    driver: local
